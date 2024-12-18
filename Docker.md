@@ -52,7 +52,9 @@ Docker File
     Dockerfile instruction - used to create docker images
         FROM, RUN, ENV, ARG, LABEL, CMD, EXPOSE, VOLUME, COPY, ADD, WORKDIR
     Building docker Image
-    
+    -t -> is used to mention the tag name
+    Docker image prune -a -> this will delete all the images that are not currently running
+     
 Docker Repository
 Docker Registery
 Docker compose
