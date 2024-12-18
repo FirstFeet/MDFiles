@@ -65,6 +65,7 @@ Data management in containers
     --mount source=srcdir, target=targetdir
     docker volume create <name>
     Diff bet Volumes and BindMounts
+    type bind - sync the bind folder with container
     
 Docker Repository
 Docker Registery
