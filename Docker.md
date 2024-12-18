@@ -54,7 +54,18 @@ Docker File
     Building docker Image
     -t -> is used to mention the tag name
     Docker image prune -a -> this will delete all the images that are not currently running
-     
+    docker build -t [username/tagname:version] [*dir]
+    docker inspect [username/tagname:version] 
+    Copy file from local to container
+Data management in containers
+    Volumes - Volumes will not be removed when used removes the container
+    Bind mounts - can be stored any where in host system
+    The location of the volume in local will be in inspect of the container
+        Under Mounts -> source/destination
+    --mount source=srcdir, target=targetdir
+    docker volume create <name>
+    Diff bet Volumes and BindMounts
+    
 Docker Repository
 Docker Registery
 Docker compose
@@ -106,3 +117,6 @@ Docker Parameters
     -v
     --help
     -it
+    --mount source=srcdir, target=targetdir
+
+
