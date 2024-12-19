@@ -66,11 +66,31 @@ Data management in containers
     docker volume create <name>
     Diff bet Volumes and BindMounts
     type bind - sync the bind folder with container
-    
+    Project 1 - Update mysql database version with data
+    Project 2 - Update files in nginx server
+    TO CHECK AND CONFIRM: Volumes transfer file from contai ner to local and Bind do it vice a versa.
+Docker Compose
+    Role- Single command for image building and container creation
+    compose-build - docker compose build
+    compose-up 
+    compose-down
+    Yaml files
+    YAML Section tags
+        Services
+        Volumes
+        Environment Variable
+        Networks
+        Ports
+        Commands
+        Build
+        Image
+        If we have multiple dockerfile it is manditory to have the dockerfile name
+        
+
+
 Docker Repository
 Docker Registery
-Docker compose
-    compose-up
+
 Docker Commands
     Docker Build
     Docker pull [imagename] 
@@ -119,5 +139,7 @@ Docker Parameters
     --help
     -it
     --mount source=srcdir, target=targetdir
+    -e -> to add environment variable
+
 
 
