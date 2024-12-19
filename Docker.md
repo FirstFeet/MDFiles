@@ -72,10 +72,22 @@ Data management in containers
 Docker Compose
     Role- Single command for image building and container creation
     compose-build - docker compose build
-    compose-up 
-    compose-down
+    compose-up  - dockler compose up - will download all the images required for the container and start the containers. -d is used to run in detached mode. -f to provide filename
+    compose-down - docker compose down
+    docker compose version
+    docker compose --help
+    docker compose cp
+    docker compose push
+    docker compose logs [Service name]
+        --tail=10
+        -- follow
+    execute Application in docker compose
+    View container logs
+    Shell into container
+        docker compose exec [container] bin/bash
     Yaml files
-    YAML Section tags
+        YAML Section tags
+        container_name
         Services
         Volumes
         Environment Variable
@@ -84,10 +96,8 @@ Docker Compose
         Commands
         Build
         Image
+        depends_on
         If we have multiple dockerfile it is manditory to have the dockerfile name
-        
-
-
 Docker Repository
 Docker Registery
 
