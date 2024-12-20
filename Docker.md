@@ -113,6 +113,7 @@ Docker Commands
     Docker version
     Docker volume
     Docker wait
+    Docker stack ls
 Docker Parameters
     --name
     -p
@@ -153,7 +154,7 @@ Docker Compose
         Image
         depends_on
         If we have multiple dockerfile it is manditory to have the dockerfile name
-
+        Visualizer
 
 ========================
 
@@ -193,7 +194,42 @@ Docker Swarn
         Scale up services - docker service update <service_name> - -replicas <Number of Services>
         Delete a container - docker container rm -f <service_name>
         docker service rollback <serviceId> 
+    Docker swarm cluster
+         Docker playground - https://labs.play-with-docker.com/
+         Manager status is  docker node ls
+    Create Docker Swarm Cluster | Complete Configuration
+        Digital Ocean + Docker Install
+        RollOut machine on Cloud like AWS, Google, Azure, DO etc.
+        Install Docker CE on Worker Nodes
+        Add user to Docker Group
+            sudo usermod -aG docker <username>
+    Create Docker Swarm Cluster | Complete Initialization and SetUp
+        Find all the Commands work on Docker Swarm Node 
+            docker node --help
+                Commands:
+                    demote      Demote one or more nodes from manager in the swarm
+                    inspect     Display detailed information on one or more nodes
+                    ls          List nodes in the swarm
+                    promote     Promote one or more nodes to manager in the swarm
+                    ps          List tasks running on one or more nodes, defaults to current node
+                    rm          Remove one or more nodes from the swarm
+                    update      Update a node
+        Get Token at runtime:
+            docker swarm join-token manager
+        Switch Manager Node in Docker
+            docker node update - -role manager <node_name>
+        Create Docker Service with Replicas
+            docker service create --replicas <Number of Replica> <Image> <Command>
+        Verify Which Node is running, which containers 
+            docker service ps <service_name>
+    Visualizing Cluster State using Docker Swarm Visualizer
+        Executing a visualizer on Docker Swarm involves using a tool that can provide a graphical representation of your Docker Swarm cluster.
+        Popular tool for this purpose is "dockersamples/visualizer"
+        Write a Compose file.
+        Execute Compose file as Stack on Docker Swarm. docker stack deploy -c docker-compose.yml visualizer
+    Docker Swarm Networking
         
+
     
 
 
