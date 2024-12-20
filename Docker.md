@@ -69,35 +69,6 @@ Data management in containers
     Project 1 - Update mysql database version with data
     Project 2 - Update files in nginx server
     TO CHECK AND CONFIRM: Volumes transfer file from contai ner to local and Bind do it vice a versa.
-Docker Compose
-    Role- Single command for image building and container creation
-    compose-build - docker compose build
-    compose-up  - dockler compose up - will download all the images required for the container and start the containers. -d is used to run in detached mode. -f to provide filename
-    compose-down - docker compose down
-    docker compose version
-    docker compose --help
-    docker compose cp
-    docker compose push
-    docker compose logs [Service name]
-        --tail=10
-        -- follow
-    execute Application in docker compose
-    View container logs
-    Shell into container
-        docker compose exec [container] bin/bash
-    Yaml files
-        YAML Section tags
-        container_name
-        Services
-        Volumes
-        Environment Variable
-        Networks
-        Ports
-        Commands
-        Build
-        Image
-        depends_on
-        If we have multiple dockerfile it is manditory to have the dockerfile name
 Docker Repository
 Docker Registery
 
@@ -151,5 +122,78 @@ Docker Parameters
     --mount source=srcdir, target=targetdir
     -e -> to add environment variable
 
+========================
+
+Docker Compose
+    Role- Single command for image building and container creation
+    compose-build - docker compose build
+    compose-up  - dockler compose up - will download all the images required for the container and start the containers. -d is used to run in detached mode. -f to provide filename
+    compose-down - docker compose down
+    docker compose version
+    docker compose --help
+    docker compose cp
+    docker compose push
+    docker compose logs [Service name]
+        --tail=10
+        -- follow
+    execute Application in docker compose
+    View container logs
+    Shell into container
+        docker compose exec [container] bin/bash
+    Yaml files
+        YAML Section tags
+        container_name
+        Services
+        Volumes
+        Environment Variable
+        Networks
+        Ports
+        Commands
+        Build
+        Image
+        depends_on
+        If we have multiple dockerfile it is manditory to have the dockerfile name
+
+
+========================
+
+
+Docker Swarn
+    clusturing and Scheduling tool
+    Docker native support
+    Orchestration
+    Two nodes
+        Master node
+        Worker node
+    Swarm is implemented with Raft algorithm
+    Raft algorithm is used for fault tolaerance
+    Three roles: Leader, follower, candidate
+    Handling failure: election process
+    Leader: Task scheduling, Load balancing, Rolling updates, Security
+    Docker Containers
+        ➢ Docker Swarm : The cluster management and orchestration features embedded in the Docker Engine are built using swarmkit.
+        ➢ A swarm consists of multiple Docker hosts which run in swarm mode and act as managers (to manage membership and delegation) and workers (which run swarm services).
+        ➢ Host : Docker host can be a manager, a worker, or perform both roles.
+        ➢ Service : When you create a service, you define its optimal state (number of replicas, network and storage resources available to it, ports the service exposes to the outside world, and more).
+        ➢ Docker Swarm :Docker Swarm maintains the Service Desired State. For instance, if a worker node becomes unavailable, Docker schedules that node’s tasks on other nodes.
+        ➢ Task : Task is a running container which is part of a swarm service and managed by a swarm manager.
+    Initilize Docker Swarm
+        docker Swarm init --advertise-addr
+        Docker info - Swarn - active/inactive
+        Once active we will get the Node Address and Manager Address
+        Docker swarm --help
+            ca, init, join, join-token, leave, unlock, unlock-key, update
+        Docker service --help
+            create, inspect, logs, ls, ps, rm, rollback, scale, update
+    Create Service in Docker Swarm
+        Docker service create
+        Services has containers
+        docker service ls - list all services
+        docker services ps <serviceId> - list all containers
+        Scale up services - docker service update <service_name> - -replicas <Number of Services>
+        Delete a container - docker container rm -f <service_name>
+        docker service rollback <serviceId> 
+        
+    
 
 
