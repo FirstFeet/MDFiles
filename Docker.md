@@ -1,3 +1,7 @@
+LabExersise
+    57, 68, 73, 77, 80
+
+
 Install docker
     Windows 
     mac
@@ -228,8 +232,76 @@ Docker Swarn
         Write a Compose file.
         Execute Compose file as Stack on Docker Swarm. docker stack deploy -c docker-compose.yml visualizer
     Docker Swarm Networking
-        
+        Docker network ls
+            ➢ When you initialize a swarm or join a Docker host to an existing swarm, two new networks are created on that Docker host:
+            ➢ Ingress: Ingress is an Overlay Network, which handles control and data traffic related to swarm services.
+            ➢ If Swarm Service is not connected with user defined Overlay Network, it connect to ingress Network.
+            ➢ Bridge Network: Bridge network called docker_gwbridge, which connects the individual Docker node to the other node participating in the swarm.
+        Need the following ports open to traffic to and from each Docker host participating on an overlay network:
+            ○ TCP port 2377 for cluster management communications
+            ○ TCP and UDP port 7946 for communication among nodes
+            ○ UDP port 4789 for overlay network traffic.
+        ➢ Create an Overlay Network.
+            docker network create -d overlay <network_name>
+        ➢ Create Service on user Define Overlay Network
+            docker service create - -name <Service_name> - -network <network_name> -e POSTGRES_PASSWORD=mypassword <Image_name>
+        ➢ Create web-service to access the DB and same network 
+            docker service create - -name   <service_name> - -network <network_name> -p 80:80 <image_name>
 
     
-
-
+Docker Swarm Stack 
+    Introduction
+        ➢ Stack : Stack is a group of interrelated services that share dependencies, and can be orchestrated and scaled together.
+        ➢ A single stack is capable of defining and coordinating the functionality of an entire application.
+        ➢ Complex Application may have multiple Stacks as well.
+        ➢ Docker Stack uses Compose’s YAML format and complements the
+        Swarm-specific properties for service deployments.
+        ➢ File Name could be like docker-stack.yml
+    Build the application in Swarm stack
+        Build the Image and push the image
+        docker build --tag=friendly_hello .
+        docker tag <image> <username/repository:tag> 
+        docker push <username/repository:tag>
+    Docker stack implementation
+        ➢ Deploy the Service in Docker Swarm
+            docker stack deploy -c docker-compose.yml webapp_start
+        ➢ Verify Service docker service ls
+        ➢ List Stack name
+            docker stack services webapp_start
+        ➢ A single container running in this Service is called Task. So Single Service can execute multiple Tasks.
+    Scaling
+        Horizantal and vertical
+        No need of downtime for vertical and horizantal scaling in swarm stack
+    Swarm distributed app
+        ➢ Get the YAML of Distributed Voting App. https://github.com/dockersamples/example-voting-app
+        ➢ Get List of Stack running in Swarm
+             docker swarm ls
+        ➢ Get List of Task Running in Stack 
+            docker stack ps <Stack_Name>
+        ➢ Get List of Replicas Running in Service 
+            docker services <Stack_Name>
+    Docker Secrets
+        ➢ Manage Docker Secrets.
+        ➢ Secrets : A secret is a piece of data, such as a password, SSH private key, SSL certificate, or another piece of data that should not be transmitted over a network or stored unencrypted in a Dockerfile or in your application’s source code.
+        ➢ User can manage this sensitive Data with Docker Swarm Secrets
+        ➢ Docker centrally Manage this Data and send to only container that need it.
+        ➢ Docker Secrets is only available in the Swarm mode, so standalone containers can not use this feature.
+        ➢ Only Granted Service and Containers access the Secrets Data over the Network.
+        ➢ Another use case for using secrets is to provide a layer of abstraction between the container and a set of credentials.
+        ➢ Containers work on mounted decrypted secrets, which store at /run/secrets/<secret_name> in containers.
+        ➢ User can update a service to grant it access to additional secrets or revoke its access to a given secret at any time.
+        ➢ When container task stops running, the decrypted secrets shared to it are unmounted from the in-memory filesystem for that container and flushed from the node’s memory.
+    Secrets commands
+        docker secret --help
+        docker secret ls
+        docker secret create <secret_name> <file_name> 
+        echo “Secret_String” | docker secret create <secret_name> -
+        docker secret inspect <secret_name>
+        docker service create --name <service_name> --secret <username_secret> --secret <pass_secret> -e POSTGRES_PASSWORD_FILE=/run/secrects/<pass_secret> -e POSTGRES_USER_FILE=run/secrects/<user_secret> <IMAGE>:TAG
+    Use Secret in Docker Stack
+        Deploy Stack using file Base Secrets
+        Deploy Stack using CLI Base Secrets
+        Deploy PostGres using file Base Secrets 
+        Deploy CentOS Image using CLI base Secrets
+    Docker swarm service management
+        
