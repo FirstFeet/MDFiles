@@ -304,4 +304,82 @@ Docker Swarm Stack
         Deploy PostGres using file Base Secrets 
         Deploy CentOS Image using CLI base Secrets
     Docker swarm service management
-        
+        Introduction
+            commands
+                docker service scale <service name> = 10
+                docker service ls - list all services
+                docker service ps <serviceid> - list all replicas in a service
+                docker service update --image <imageid>:<tag> <servicename>
+                docker service update --publish-rm 8080 --publish-add 9090:80 <servicename>
+                docker server rm <servicename>
+            Swarm Help us to Limit the Downtime in Service Update/ Upgrade.
+            It’s all become possible with Rolling Upgrade Approach.
+            Service Upgrade Provides rolling upgrade of replicas/ containers with Zero-downtime.
+            Service Upgrade Replace Containers in practical
+            Some examples of Service Upgrade
+            Enhance the Version of your Deployed Service
+                docker service update - -image <Imagename> <servicename>
+            Swarm Update in Stack File
+            Edit YML file and deploy the same file
+                docker stack deploy -c <yml file> <servicename>
+            Start Some NGINX Service on some port 
+                docker service create -p 80:8080 - -name <service_name> <nginx Image: version>
+            Scale service Horizontally
+                docker service scale <servicename> = <number of replicas>
+            Enhance Deployed Image Version
+                docker service update - -image <Nginximage:version> <servicename>
+            Change Port of running service
+                docker service update - -publish-rm <old_port> - -publish- add <new_port>:80
+        Health Check in Docker Services
+            Health checks are exactly what they sound like - a way of checking the health of some resource.
+            Docker has inbuilt functionality to check the Container Health.
+            Docker health check can be applied in Docker Run Command, Docker File, Docker Service and Docker Stack.
+            Docker health-check define weather the service is working or not.
+            HealthCheck instruction format:
+                HEALTHCHECK [option] CMD <command>: The command that sets the container health check.
+                HEALTHCHECK instructions can check the health status when instantiating Docker containers.
+                HEALTHCHECK Supports following Options:
+                --interval=<interval>: The time interval between two health checks. The default value is 30 seconds.
+                --timeout=<interval>: The timeout for running the health check command. The health check fails if the timeout is exceeded. The default value is 30 seconds.
+                --retries=<number of times>: The container status is regarded as unhealthy if the health check fails continuously for a specified number of times. The default value is 3.
+                --start-period=<interval>: The initialization time of application startup. Failed health check during the startup is not counted. The default value is 0 second.
+            Verify the HEALTHCHECK of Docker Container Verify HEALTHCHECK of Docker Service
+        Container placement in docker swarm
+            Docker warm will try and place your container to provideaximum reselencyth in the service
+            Place the container on the specific node, for monitoring application functionality
+            One way to manage placemant is service constraints
+            service constraints is used to control the nodes a service can be assigned to
+            service constraints can be added in creation time or removed/added in run time
+            By creation of hardcoded requirement container placement fails if not matched
+            Multiple constrainscan be assigned to a single service.
+            It supports both key and key value pair
+            command
+                docker service create --name my_service --constraint 'node.role==worker' my_image
+                docker service update --name my_service --constraint-rm 'node.role==worker' --constraint-add 'node.role==manager' my_image
+            Define Service Constraints in Docker Stack File.
+            Understand the Secret 
+                Commands docker secret - -help
+            Ways to Create Secret 
+            By file:
+                docker secret create <secret_name> <file_name>
+            By CLI:
+                echo “Secret_String” | docker secret create <secret_name> -
+            Inspect the Secret:
+            docker secret inspect <secret_name>
+            Create Postgres Service with secrets:
+                docker service create - -name <service_name> - -secret <username_secret> - -secret <pass_secret> -e POSTGRES_PASSWORD_FILE=/run/secrects/ <pass_secret> -e POSTGRES_USER_FILE=run/secrects/ <user_secret> <IMAGE>:TAG
+        service constraints in yaml file
+            Create a visulizer
+                Yaml
+                    version: '3'  
+                    services:  
+                    visualizer:  
+                        image: dockersamples/visualizer:latest  
+                        ports:  
+                        - "8080:8080"  
+                        deploy:  
+                        placement:  
+                            constraints:  
+                            - node.role == manager
+                docker stack deploy -c docker-compose.yml visualizer
+                Access the visualizer by navigating to http://<manager-node-ip>:8080 in your web browser.
