@@ -368,6 +368,8 @@ Docker Swarm Stack
             docker secret inspect <secret_name>
             Create Postgres Service with secrets:
                 docker service create - -name <service_name> - -secret <username_secret> - -secret <pass_secret> -e POSTGRES_PASSWORD_FILE=/run/secrects/ <pass_secret> -e POSTGRES_USER_FILE=run/secrects/ <user_secret> <IMAGE>:TAG
+        Create a visualizer
+            docker run -it -d -p 8080:8080 -v /var/run/docker.sock:/var/ run/docker.sock dockersamples/visualizer
         service constraints in yaml file
             Create a visulizer
                 Yaml
